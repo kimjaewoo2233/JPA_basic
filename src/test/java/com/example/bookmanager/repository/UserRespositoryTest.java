@@ -15,6 +15,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @SpringBootTest
@@ -133,10 +134,17 @@ public class UserRespositoryTest {
        // userRepository.findByIdGreaterThanAndIdLessThan(1,2).forEach(System.out::println);
         //userRepository.findByNameIn(Lists.newArrayList("kim","pa")).forEach(System.out::println);
 
-        System.out.println("findByNameStartingWith"+userRepository.findByNameStartingWith("ki"));
-        System.out.println("findByNameContains"+userRepository.findByNameContains("i"));
-        System.out.println("findByNameEndingWith"+userRepository.findByNameEndingWith("m"));
-
+//        System.out.println("findByNameContains"+userRepository.findByNameContains("i"));
+//        System.out.println("findByNameStartingWith"+userRepository.findByNameStartingWith("ki"));
+//        System.out.println("findByNameEndingWith"+userRepository.findByNameEndingWith("m"));
+     //       userRepository.findTop1ByIdOrderByIdDesc(1).forEach(System.out::println);
+            //userRepository.findFirstByName("kim",Sort.by(Sort.Direction.DESC,"id"));
+            //userRepository.findFirstByName("kim",Sort.by(Sort.Order.desc("id"),Sort.Order.asc("name")));
+        //System.out.println("Paging"+userRepository.findByName("kim",PageRequest.of(0,1,Sort.by(Sort.Order.asc("id")))));    //0부터시작
+        List<User> users = userRepository
+                .findByName("kim",PageRequest.of(0,1,Sort.by(Sort.Order.asc("id"))))
+                .stream().collect(Collectors.toList());
+        users.forEach(System.out::println);
     }
 
 }

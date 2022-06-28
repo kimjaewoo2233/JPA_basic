@@ -2,6 +2,8 @@ package com.example.bookmanager.repository;
 
 import com.example.bookmanager.domain.User;
 import net.bytebuddy.TypeCache;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -93,6 +95,23 @@ public interface UserRepository extends JpaRepository<User,Integer> {  //엔티�
     List<User> findByNameLike(String name);
     //위에랑 다른 점은 매개변수를 줄떄 이 메소드는 ("%i%") 이런식으로 준다
     // %는 어디에 오든 상관없다
+
+
+    List<User> findTop1ByIdOrderByIdDesc(int id);
+    //내림차순으로 정렬후 맨 위에 하나만 가지고온다
+    //select * from user order by id=? DESC limit 1;
+    List<User> findTop1ByNameOrderByIdAsc(String name);
+
+
+    List<User> findFirstByName(String name,Sort sort);
+    //정렬 방법을 매개변수로 받을 수 있다 Sort.by(Sort.Order.desc("id"),Sort.Order.asc("name"));
+    //select * from user where name= ? order by id desc,name asc limit 1;
+
+
+    //Paging
+    Page<User> findByName(String name, Pageable pageable);
+    //Pageable은 요청값 Page는 응답값으로 보면된다.
+    //PageRequest는 Pageable 구현체이고 of메소드는 page,size,sort를 받을 수 있다
 
 
 }
