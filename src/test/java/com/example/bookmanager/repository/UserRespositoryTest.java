@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
+import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -118,6 +119,23 @@ public class UserRespositoryTest {
             userRepository.save(user1);
             //이미있는 값이면 update쿼리가 발생한다 없는 값이면 insert 쿼리가 동작한다
             //Entity객체에서 지정한 @Id값이 null이면 insert 있는 값이면 update한다
+
+    }
+    @Test
+    void test06(){
+        //userRepository.findFirst2ByName("kim").forEach(System.out::print);
+       // userRepository.findByCreateAtAfter(LocalDateTime.now().minusDays(1L)).forEach(System.out::println);
+       // userRepository.findByIdAfter(3).forEach(System.out::println);
+        //   userRepository.findByCreateAtGreaterThanEqual(LocalDateTime.now().minusDays(1L)).forEach(System.out::println);
+       // userRepository.findByCreateAtBetween(LocalDateTime.now().minusDays(1L),LocalDateTime.now()).forEach(System.out::println);
+       // Optional<User> user = userRepository.findByIdBetween(3,5).stream().findFirst();
+       // System.out.println("user========>"+user.get());
+       // userRepository.findByIdGreaterThanAndIdLessThan(1,2).forEach(System.out::println);
+        //userRepository.findByNameIn(Lists.newArrayList("kim","pa")).forEach(System.out::println);
+
+        System.out.println("findByNameStartingWith"+userRepository.findByNameStartingWith("ki"));
+        System.out.println("findByNameContains"+userRepository.findByNameContains("i"));
+        System.out.println("findByNameEndingWith"+userRepository.findByNameEndingWith("m"));
 
     }
 

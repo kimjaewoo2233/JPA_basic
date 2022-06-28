@@ -2,6 +2,7 @@ package com.example.bookmanager.domain;
 
 
 import lombok.*;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,6 +27,6 @@ public class User {     //해당 객체를 조회하고 생성하는 방법은 R
     private  String email;
 
     private LocalDateTime createAt;
-
+    //db에는 create_at으로 된다 낙타체가 스네이크체로 변경됨
     private LocalDateTime updateAt;
 }

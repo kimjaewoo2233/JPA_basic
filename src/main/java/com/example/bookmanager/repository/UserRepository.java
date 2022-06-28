@@ -1,7 +1,12 @@
 package com.example.bookmanager.repository;
 
 import com.example.bookmanager.domain.User;
+import net.bytebuddy.TypeCache;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 public interface UserRepository extends JpaRepository<User,Integer> {  //엔티티타입,엔티티에 pk 변수타입
     // JpaRepository 인터페이스에 구현체는 SimpleJpaRepository에 구현되어있다
@@ -22,5 +27,72 @@ public interface UserRepository extends JpaRepository<User,Integer> {  //엔티�
     //Optional<T> findById(ID id);
     //boolean existsById(ID id);    //해당객체가 존재하는지
     //long count()   갯수
+
+
+    List<User> findByEmail(String email); //name으로 찾는다 findBy-- --부분은 Entity필드명 아무거나
+    //select * from user where email=?;         결과는 Optional로도 받을 수 있음 findById는 Optional로 받는다 심지어 Set도 가능
+
+    List<User> getByEmail(String email);
+    List<User> readByEmail(String email);
+    List<User> queryByEmail(String email);
+    List<User> searchByEmail(String email);
+    List<User> streamByEmail(String email);
+    List<User> findUserByEmail(String email);
+    List<User> findSomethingByEmail(String emil);
+    //SpringData JPA 에서 이상한 문자 다 걸러낸다 Something걸러냄
+    //이거 findByEmail이랑 다 똑같은 표현이고 결과도 같다
+
+    //2.First Top
+    User findFirstByName(Sort sort, String name);
+    List<User> findFirst2ByName(String name);
+    //윗대가리에서 두개를 가져온다. findTopByName도 똑같이 사용가능하다 (last는 없음)
+    //select * from user where name = ? limit 2;
+    //매개변수 Sort를 사용하면 order by 사용가능하다
+    //Sort.by(Sort.Derection.DESC,"id");
+
+    //AND OR
+    List<User> findByNameAndEmail(String name,String email);
+    //select * from user where name=? and email=?;
+    List<User> findByNameOrEmail(String name,String email);
+    //select * from user where name=? or email?;
+
+    List<User> findByCreateAtAfter(LocalDateTime yesterday);
+    //select * from user where create_at > ?; 이 날짜보다 큰것 즉 지난날이 작은값
+    List<User> findByIdAfter(int id);
+    //select * from user where id > ?;  매개변수로 받은 값보다 큰 값들
+
+    List<User> findByCreateAtGreaterThan(LocalDateTime yesterday);
+    //select * from user where create_at > ?;
+    List<User> findByCreateAtGreaterThanEqual(LocalDateTime yesterday);
+    //select * from user where create_at >= ?;
+    List<User> findByCreateAtBetween(LocalDateTime yesterday,LocalDateTime tomorrow);
+    //select * from user where create_at between ? and ?;
+    List<User> findByIdBetween(int id1,int id2);
+    //select * from user where id between ? and ?;  ?부터 ?까지 ?도포함
+
+    List<User> findByIdGreaterThanAndIdLessThan(int id1,int id2);
+    //select * from user where id >? and id<?;
+    //between은 자기도 포함한다
+
+   // List<User> findByIdIsNotNull(int id);
+    //select * from user where id is not null; null이 아닌 것들만 가져온다
+   // List<User> findByIdIsNotEmpty(int id);
+    //여기서 not Empty는 Collection이 Empty인지 확인한다
+    //필드가 @OneToMany이고 List형태여야 한다 --많이 사용안한다
+
+    List<User> findByNameIn(List<String> names);
+    //Iterator가 매개변수로 들아간다
+    //select * from user where name in ( ?,?);      --소괄호 안에는 List형태가 들어간다
+
+    List<User> findByNameStartingWith(String name);
+    //select * from user where name like ?;
+    // --아래 메소드들은 전부 똑같은 쿼리가 작동하고 매개변수로 받는 문자가 앞이냐 뒤냐 포함되느냐에 따라만 다르다
+    List<User> findByNameEndingWith(String name);
+    List<User> findByNameContains(String name);
+
+    List<User> findByNameLike(String name);
+    //위에랑 다른 점은 매개변수를 줄떄 이 메소드는 ("%i%") 이런식으로 준다
+    // %는 어디에 오든 상관없다
+
 
 }
