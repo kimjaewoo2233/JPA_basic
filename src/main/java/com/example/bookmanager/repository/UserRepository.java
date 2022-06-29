@@ -6,11 +6,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User,Integer> {  //엔티티타입,엔티티에 pk 변수타입
+    //queryMethod
     // JpaRepository 인터페이스에 구현체는 SimpleJpaRepository에 구현되어있다
     //findAll()     --데이터 양이 많을떄 사용 ㄴㄴ
     //findAll(Sort sort) -- 정렬값
@@ -30,7 +35,7 @@ public interface UserRepository extends JpaRepository<User,Integer> {  //엔티�
     //boolean existsById(ID id);    //해당객체가 존재하는지
     //long count()   갯수
 
-
+    Optional<User> findByName(String name);
     List<User> findByEmail(String email); //name으로 찾는다 findBy-- --부분은 Entity필드명 아무거나
     //select * from user where email=?;         결과는 Optional로도 받을 수 있음 findById는 Optional로 받는다 심지어 Set도 가능
 
@@ -58,16 +63,16 @@ public interface UserRepository extends JpaRepository<User,Integer> {  //엔티�
     List<User> findByNameOrEmail(String name,String email);
     //select * from user where name=? or email?;
 
-    List<User> findByCreateAtAfter(LocalDateTime yesterday);
+    //List<User> findByCreateAtAfter(LocalDateTime yesterday);
     //select * from user where create_at > ?; 이 날짜보다 큰것 즉 지난날이 작은값
     List<User> findByIdAfter(int id);
     //select * from user where id > ?;  매개변수로 받은 값보다 큰 값들
 
-    List<User> findByCreateAtGreaterThan(LocalDateTime yesterday);
+   // List<User> findByCreateAtGreaterThan(LocalDateTime yesterday);
     //select * from user where create_at > ?;
-    List<User> findByCreateAtGreaterThanEqual(LocalDateTime yesterday);
+    //List<User> findByCreateAtGreaterThanEqual(LocalDateTime yesterday);
     //select * from user where create_at >= ?;
-    List<User> findByCreateAtBetween(LocalDateTime yesterday,LocalDateTime tomorrow);
+    //List<User> findByCreateAtBetween(LocalDateTime yesterday,LocalDateTime tomorrow);
     //select * from user where create_at between ? and ?;
     List<User> findByIdBetween(int id1,int id2);
     //select * from user where id between ? and ?;  ?부터 ?까지 ?도포함
@@ -113,5 +118,6 @@ public interface UserRepository extends JpaRepository<User,Integer> {  //엔티�
     //Pageable은 요청값 Page는 응답값으로 보면된다.
     //PageRequest는 Pageable 구현체이고 of메소드는 page,size,sort를 받을 수 있다
 
-
+    @Query(value="select * from user limit 1;",nativeQuery = true)
+    Map<String,Object> findRawRecord(); //위에 쿼리 결과가 Map에 저장되어 리턴된다
 }

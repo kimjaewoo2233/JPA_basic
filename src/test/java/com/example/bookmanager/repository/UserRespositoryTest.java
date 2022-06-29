@@ -30,8 +30,6 @@ public class UserRespositoryTest {
 
             user.setName("test");
             user.setEmail("ta3844@naver.com");
-            user.setCreateAt(date);
-            user.setUpdateAt(date);
             userRepository.save(user);
             userRepository.findAll().forEach(System.out::println);
     }
