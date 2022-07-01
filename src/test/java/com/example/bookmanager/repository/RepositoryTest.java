@@ -22,7 +22,7 @@ public class RepositoryTest {
         user.setGender(Gender.MALE);
         repository.save(user);
 
-        User user2 = repository.findById(1).orElse(null);
+        User user2 = repository.findById(1L).orElse(null);
         user2.setGender(Gender.FEMALE);
         repository.save(user2);
 
@@ -33,7 +33,7 @@ public class RepositoryTest {
 
     @Test
     void si(){
-       User user = repository.findById(1).orElse(null);
+       User user = repository.findById(1L).orElse(null);
        user.setName("kaem");
        repository.save(user);
     }

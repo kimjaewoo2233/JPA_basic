@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User,Integer> {  //엔티티타입,엔티티에 pk 변수타입
+public interface UserRepository extends JpaRepository<User,Long> {  //엔티티타입,엔티티에 pk 변수타입
     //queryMethod
     // JpaRepository 인터페이스에 구현체는 SimpleJpaRepository에 구현되어있다
     //findAll()     --데이터 양이 많을떄 사용 ㄴㄴ

@@ -2,10 +2,8 @@ package com.example.bookmanager.domain;
 
 
 import lombok.*;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,10 +15,10 @@ import java.time.LocalDateTime;
 //@Table 테이블 명과 클래스명이 일치하면 안 적어도된다. 만약 일치하지 않으면 (name) 설정해야한다
 //@Table
 //@EntityListeners(value = {MyEntityListener.class,UserEntityListener.class})
-public class User extends BaseEntity implements Auditable{     //해당 객체를 조회하고 생성하는 방법은 Repository이용한다
+public class User extends BaseEntity{     //해당 객체를 조회하고 생성하는 방법은 Repository이용한다
     @Id             //primary key 지정
     @GeneratedValue(strategy = GenerationType.IDENTITY) //값이 자동증가 auto와 동일  mysql의 경우 이렇게 설정해야한다
-    private int id;     //레코드를 분류할 수 있도록 PK지정
+    private Long id;     //레코드를 분류할 수 있도록 PK지정
                         //auto_increment 떄문에 IDENTITY Default는 AUTO임 하지만 구체적으로 명시하는 것이 좋다
     private String name;
 

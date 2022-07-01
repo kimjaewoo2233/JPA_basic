@@ -1,5 +1,6 @@
 package com.example.bookmanager.repository;
 
+import com.example.bookmanager.domain.Gender;
 import com.example.bookmanager.domain.User;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,7 @@ public class UserRespositoryTest {
     void crud(){
         List<User> users = userRepository.findAll(Sort.by(Sort.Direction.DESC,"createAt"));
         users.forEach(System.out::println); //findAll은 Sort를 매개변수로 받을 수 있다
-        List<User> users2 =  userRepository.findAllById(Lists.newArrayList(1,2,3));
+        List<User> users2 =  userRepository.findAllById(Lists.newArrayList(1L,2L,3L));
         //assertj는 junit 테스트 코드에서 지원해주는 라이브러리이다. List변수를 선언해서하면 너무 길기에 저렇게하면 자동 add해줌
         //findAllById(List) 이렇게 사용하는 코드임 Id값이 1,2,3인 값을 가져온다는 코드이다
         //sql로 보면 select + from table where id in(1,2,3);
@@ -59,33 +60,33 @@ public class UserRespositoryTest {
     @Test
     @Transactional
     void outTest(){
-        User user = userRepository.getOne(10); //null이면 에러남
-        Optional<User> user1 = userRepository.findById(10); //null여도 에러가 안나고 Optional.empty를 리턴한다
-        User user2 = userRepository.findById(2).orElse(null);   //이것도 가능  값이 없으면 null을 넣는다는 뜻임
+        User user = userRepository.getOne(10L); //null이면 에러남
+        Optional<User> user1 = userRepository.findById(10L); //null여도 에러가 안나고 Optional.empty를 리턴한다
+        User user2 = userRepository.findById(2L).orElse(null);   //이것도 가능  값이 없으면 null을 넣는다는 뜻임
         //findById는 반환값이 Optional이다
 
         long count = userRepository.count();    //행갯수 그리고 반환타입은 long이어야한다.
         System.out.println(count);
-        boolean exists = userRepository.existsById(1);
+        boolean exists = userRepository.existsById(1L);
         System.out.println("값이있으면 true"+exists);
     }
     @Test
     void deleteTest(){
         //delete는 null이 들어가면 문제가 생긴다 delete하기 전에 select를 해서 확인하고 한다
-        userRepository.delete(userRepository.findById(1).orElseThrow(RuntimeException::new));
+        userRepository.delete(userRepository.findById(1L).orElseThrow(RuntimeException::new));
         // userRepository.findById(1).orElseThrow(RuntimeException::new)
         //값이 비면 RuntimeException을 일으키는 코드이다.
 
-        userRepository.deleteById(2);
+        userRepository.deleteById(2L);
         userRepository.findAll().forEach(System.out::println);
 
         //userRepository.deleteAll(); //다지운다
         userRepository.deleteAll(
-                userRepository.findAllById(Lists.newArrayList(1,2,3))
+                userRepository.findAllById(Lists.newArrayList(1L,2L,3L))
         );  //findAllById로 찾은 3개를 지운다 이렇게 찾은 객체를 넣어도 그것들을 지울 수 있음
 
         userRepository.deleteInBatch(
-                userRepository.findAllById(Lists.newArrayList(1,2,3))
+                userRepository.findAllById(Lists.newArrayList(1L,2L,3L))
         );
         //두개 차이가 있음 이건 delete하기 전에 select를 하지 않는다 있든 없든 바로 delete한다.
         //deleteAllInbatch
@@ -114,7 +115,7 @@ public class UserRespositoryTest {
             user.setEmail("ta3333");
 
             userRepository.save(user);
-            User user1  = userRepository.findById(4).orElseThrow(RuntimeException::new);
+            User user1  = userRepository.findById(4L).orElseThrow(RuntimeException::new);
             userRepository.save(user1);
             //이미있는 값이면 update쿼리가 발생한다 없는 값이면 insert 쿼리가 동작한다
             //Entity객체에서 지정한 @Id값이 null이면 insert 있는 값이면 update한다
@@ -144,7 +145,19 @@ public class UserRespositoryTest {
                 .stream().collect(Collectors.toList());
         users.forEach(System.out::println);
     }
+    @Test
+    void userRelation(){
+        User user =new User();
+        user.setName("david");
+        user.setEmail("david@naver.com");
+        user.setGender(Gender.MALE);
 
+        userRepository.save(user);
+
+        userRepository.findAll().forEach(System.out::println);
+        //Stream을 이용한 출력방식임
+
+    }
 }
 
 

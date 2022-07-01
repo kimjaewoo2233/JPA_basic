@@ -19,7 +19,7 @@ class BookManagerApplicationTests {
     UserHistoryRepository historyRepository;
     @Test
     void contextLoads() {
-        User user = repository.findById(1).orElse(null);
+        User user = repository.findById(1L).orElse(null);
 
         System.out.println(user);
         user.setGender(Gender.MALE);
