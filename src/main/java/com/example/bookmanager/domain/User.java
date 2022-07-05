@@ -4,11 +4,14 @@ package com.example.bookmanager.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Builder
 @Entity //JPA에서 관리하는 객체임을 나타낸다
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
@@ -27,25 +30,20 @@ public class User extends BaseEntity{     //해당 객체를 조회하고 생성
 
     @NonNull
     private  String email;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id",insertable = false,updatable = false)             //어떤 컬럼으로 조인할지 정해준다 insert와 update를 여기서 못하게 설정
+    @ToString.Exclude       //ToString 순환관계를 끊는다 이거 안하면 StackOverflow
+    private List<UserHistory> userHistories = new ArrayList<>();    //데이터 타입은 Collection 타입 --원래 값 대입을 안하는 것이 맞지만
+                                                                    //NPE가 발생할 수 있기에 해야한다 이것도 거의 일어나지 않음 스프링 빈이 자동주입해줘서
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id",insertable = false,updatable = false)  //주인이 아닌 곳에서 값을 다룰 수 없다 FK가 선언된 곳이 주인이고 거기서만 넣을 숭 ㅣㅆ다
+    @ToString.Exclude
+    private List<Review> reviewList = new ArrayList<>();
 //@Column(name="create_At")
 //@Column(nullable = false) 빈 값을 허용하지 않는다
 //@Column(updatable=false) update시 update를 하지 않는다
-//    @Column(name="create_at")
-//    private LocalDateTime createdAt;
-//    //db에는 create_at으로 된다 낙타체가 스네이크체로 변경됨
-//    @Column(name="update_at")
-//    private LocalDateTime updatedAt;
-
-
-//    @PrePersist
-//    public void prePersist(){
-//        this.createAt = LocalDateTime.now();
-//        this.updateAt = LocalDateTime.now();
-//    }
-//    @PreUpdate
-//    public void postPersist(){
-//        this.updateAt = LocalDateTime.now();
-//    }
 
 }
 /*

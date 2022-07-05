@@ -49,7 +49,7 @@ class BookReviewInfoRepositoryTest {
     }
     @Test
     void test3(){
-        Book book = reviewInfoRepository.findById(7L).get().getBook();
+        Book book = reviewInfoRepository.findById(1L).get().getBook();
         System.out.println("result == >"+book);
     }
 }

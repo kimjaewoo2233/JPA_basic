@@ -22,9 +22,6 @@ public class UserHistory  {
     private Long id;
 
 
-    @Column(name="userId")
-    private Long userId;
-
     private String name;
 
     private String email;
@@ -35,6 +32,7 @@ public class UserHistory  {
     @Column(name = "update_at")
     private LocalDateTime updatedAt;
 
-
+    @ManyToOne
+    private User user;      //user_id 이걸로 받는다 FK라 가
 
 }

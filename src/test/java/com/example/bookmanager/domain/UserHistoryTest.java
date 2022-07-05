@@ -17,7 +17,6 @@ class UserHistoryTest {
     void test(){
         UserHistory history = new UserHistory();
 
-        history.setUserId(1L);
         history.setName("test");
         history.setEmail("taTest@naver.com");
         repository.save(history);

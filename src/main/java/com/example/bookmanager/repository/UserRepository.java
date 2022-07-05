@@ -36,7 +36,7 @@ public interface UserRepository extends JpaRepository<User,Long> {  //엔티티�
     //long count()   갯수
 
     Optional<User> findByName(String name);
-    List<User> findByEmail(String email); //name으로 찾는다 findBy-- --부분은 Entity필드명 아무거나
+    User findByEmail(String email); //name으로 찾는다 findBy-- --부분은 Entity필드명 아무거나
     //select * from user where email=?;         결과는 Optional로도 받을 수 있음 findById는 Optional로 받는다 심지어 Set도 가능
 
     List<User> getByEmail(String email);

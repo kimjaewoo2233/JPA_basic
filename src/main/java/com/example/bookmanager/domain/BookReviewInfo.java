@@ -18,6 +18,7 @@ public class BookReviewInfo extends BaseEntity {
 
 //        private Long bookId;
         @OneToOne(optional = false)      //1대1로 연관관계를 갖는다 FK키 이렇게 지정해야한다(optional =false)는 not null
+        @ToString.Exclude
         private Book book; //DB에는 1대1 연관관계를 맺을 수 있도록 book_id로 들어간다 FK로 지정되어있아야함
                                 //inner join 사용 optional = false일 경우 not null이기에 그러핟
         private float averageReviewScore;       //평균점수

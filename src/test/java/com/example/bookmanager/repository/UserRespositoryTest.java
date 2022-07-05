@@ -2,6 +2,7 @@ package com.example.bookmanager.repository;
 
 import com.example.bookmanager.domain.Gender;
 import com.example.bookmanager.domain.User;
+import com.example.bookmanager.domain.UserHistory;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class UserRespositoryTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserHistoryRepository historyRepository;
     @Test
     public void userTest(){     //crud - create,read,update,delete
             User user = new User();
@@ -147,16 +151,13 @@ public class UserRespositoryTest {
     }
     @Test
     void userRelation(){
-        User user =new User();
-        user.setName("david");
-        user.setEmail("david@naver.com");
-        user.setGender(Gender.MALE);
 
+
+        User user = userRepository.findById(8L).orElse(null);
+        user.setName("kim");
         userRepository.save(user);
-
-        userRepository.findAll().forEach(System.out::println);
-        //Stream을 이용한 출력방식임
-
+        User user2 = historyRepository.findById(1L).orElse(null).getUser();
+        System.out.println(user2);
     }
 }
 
