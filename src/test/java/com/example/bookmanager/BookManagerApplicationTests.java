@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 @SpringBootTest
@@ -17,15 +19,20 @@ class BookManagerApplicationTests {
     UserRepository repository;
     @Autowired
     UserHistoryRepository historyRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
     @Test
     void contextLoads() {
-        User user = repository.findById(1L).orElse(null);
-
-        System.out.println(user);
-        user.setGender(Gender.MALE);
+        User user =repository.findById(1L).get();
+        user.setName("test");
         repository.save(user);
-        historyRepository.findAll().forEach(System.out::println);
+        repository.flush();
 
-        }
+    }
+
+    @Test
+    void entityManagerTest(){
+    }
 
 }

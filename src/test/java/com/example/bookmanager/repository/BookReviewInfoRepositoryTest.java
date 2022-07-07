@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -15,6 +18,8 @@ class BookReviewInfoRepositoryTest {
     private BookReviewInfoRepository reviewInfoRepository;
     @Autowired
     private BookRepository bookRepository;
+    @PersistenceContext
+    private EntityManager entityManager;
     @Test
     void test(){
         BookReviewInfo info = new BookReviewInfo();
@@ -49,7 +54,6 @@ class BookReviewInfoRepositoryTest {
     }
     @Test
     void test3(){
-        Book book = reviewInfoRepository.findById(1L).get().getBook();
-        System.out.println("result == >"+book);
+        System.out.println(entityManager.createQuery("select u from User u").getResultList());
     }
 }

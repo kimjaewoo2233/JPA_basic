@@ -31,16 +31,16 @@ class AuthorTest {
 
 
 
-        System.out.println("authors through book : "+bookRepository.findById(14L).get());
-        System.out.println("books through author : "+authorRepository.findById(1L).orElse(null));
+//        System.out.println("authors through book : "+bookRepository.findById(14L).get());
+//        System.out.println("books through author : "+authorRepository.findById(1L).orElse(null));
     }
     @Test
     void crr(){
-        Book book = bookRepository.findById(20L).get();
-        Author author =authorRepository.findById(1L).get();
-
-        BookAndAuthor bookAndAuthor = givenBookAndAuthor(book,author);
-        System.out.println(bookAndAuthor);
+//        Book book = bookRepository.findById(20L).get();
+//        Author author =authorRepository.findById(1L).get();
+//
+//        BookAndAuthor bookAndAuthor = givenBookAndAuthor(book,author);
+//        System.out.println(bookAndAuthor);
 
     }
     @Test
